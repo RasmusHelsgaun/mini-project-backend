@@ -5,20 +5,10 @@ import { Table, Card, Form, Button } from "react-bootstrap"
 
 const ADD_USER = gql`
   mutation AddUser(
-        $firstName: Int!,
-        $lastName: String!,
-        $username: String!,
-        $password: String!,
-        $email: String!
+      $user: UserInput!
   ){
     addUser(
-        input: {
-          firstName: $firstName,
-          lastName: $lastName,
-          password: $password,
-          email: $email,
-          username: $username,
-        }
+        user: $user
     ){
         id
         username
@@ -68,12 +58,13 @@ export default class AddUser extends React.Component {
                         e.preventDefault()
                         addUser({
                             variables: {
-                                username: this.state.input.username,
-                                firstName: this.state.input.firstName,
-                                lastName: this.state.input.lastName,
-                                password: this.state.input.password,
-                                email: this.state.input.email,
-
+                                user: {
+                                    username: this.state.input.username,
+                                    firstName: this.state.input.firstName,
+                                    lastName: this.state.input.lastName,
+                                    password: this.state.input.password,
+                                    email: this.state.input.email,
+                                }
                             }
                         })
                         this.setState({ input: { firstName: "", lastName: "", username: "", password: "", email: "" } })
