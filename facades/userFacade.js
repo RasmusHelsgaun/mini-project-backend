@@ -24,9 +24,14 @@ async function findByUsername(username) {
     )
 }
 
+async function removeUser(id){
+    return await User.remove({_id: id})
+}
+
 module.exports = {
     addUser,
     addJobToUser,
     getAllUsers,
-    findByUsername
+    findByUsername,
+    removeUser
 }

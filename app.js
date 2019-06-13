@@ -6,6 +6,13 @@ var logger = require('morgan');
 var connect = require("./dbConnect");
 connect(require("./settings").DEV_DB_URI);
 
+const { ApolloServer } = require('apollo-server-express')
+
+// graphql
+const graphqlHTTP = require("express-graphql")
+const { schema, typeDefs, resolvers } = require("./graphql/schema")
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
@@ -25,6 +32,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
+
+// apollo server
+const server = new ApolloServer({ typeDefs, resolvers })
+const apolloPath = "/apollo"
+server.applyMiddleware({app, path: apolloPath})
+
+//graphql
+app.use("/graphql", graphqlHTTP({
+  schema,
+  graphiql: true,
+}))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

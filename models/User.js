@@ -28,6 +28,8 @@ UserSchema.pre("update", function (next) {
     next()
 })
 
+UserSchema.index({username: 1})
+
 var User = mongoose.model("User", UserSchema)
 
 module.exports = User

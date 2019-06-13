@@ -3,14 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=mini-project:* & nodemon -e js,ejs ./bin/www",
+    "dev": "DEBUG=mini-project:* nodemon -e js,ejs ./bin/www",
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@okgrow/graphql-scalars": "^0.4.5",
+    "apollo-server-express": "^2.6.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.3.1",
+    "graphql-tools": "^4.0.4",
     "http-errors": "~1.6.2",
     "mongoose": "^5.4.19",
     "morgan": "~1.9.0",
