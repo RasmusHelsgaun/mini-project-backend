@@ -48,7 +48,7 @@ async function makeData() {
     console.log(users);
     console.log(usr);
 
-    var positions = [positionCreator(10, 11, users[0]._id, true), positionCreator(11, 12, users[1]._id, true)]
+    var positions = [positionCreator(10, 11, users[0]._id, true),positionCreator(10, 12, users[1]._id, true), positionCreator(9, 12, users[2]._id, true),positionCreator(8, 12, usr._id, true)]
     await Position.insertMany(positions)
 
     var blogs = [{ info: "Cool Place", pos: { longitude: 26, latitude: 57 }, author: users[0]._id }]

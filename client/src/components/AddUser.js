@@ -73,7 +73,7 @@ export default class AddUser extends React.Component {
                     >
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>username</Form.Label>
-                            <Form.Control type="text" name="username" value={this.state.input.username} onChange={this.handleKeyPressed} placeholder="Enter desired username" />
+                            <Form.Control type="text" name="username" value={this.state.input.username} onChange={this.handleKeyPressed} placeholder="Enter username" />
 
                         </Form.Group>
 

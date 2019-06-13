@@ -3,22 +3,20 @@ const Position = require('../models/Position');
 
 async function login(username, password, longitude, latitude, distance) {
     console.log("We're in the backend");
-    
+
     const user = await User.findOne({ username })
 
     if (user === null || user.password != password) {
         return { msg: 'wrong username or password', status: 403 };
     }
 
-    const coordinates = [longitude, latitude]
-
-    await Position.findOneAndUpdate(
+    let pos = await Position.findOneAndUpdate(
         { _id: user._id },
-        { user, created: Date.now(), loc: { type: 'Point', coordinates } },
+        { loc: { type: 'Point', coordinates: [longitude, latitude] }, created: Date.now() },
         { upsert: true, new: true }
     ).exec()
 
-    const nearbyFriends = await findAllNearbyFriends(coordinates, distance)
+    const nearbyFriends = await findAllNearbyFriends(pos, distance)
 
     return {
         friends: nearbyFriends.map(pos => {
@@ -31,14 +29,15 @@ async function login(username, password, longitude, latitude, distance) {
     }
 }
 
-async function findAllNearbyFriends(coordinates, distance) {
+async function findAllNearbyFriends(pos, distance) {
     return await Position.find(
         {
+            user: {$ne: pos.user},
             loc:
             {
                 $near:
                 {
-                    $geometry: { type: "Point", coordinates },
+                    $geometry: pos.loc,
                     $minDistance: 0.1,
                     $maxDistance: distance
                 }
